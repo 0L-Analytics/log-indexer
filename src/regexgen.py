@@ -1,6 +1,7 @@
 #!/usr/bin/python3
+import re
 
-from typing import AnyStr
+from typing import AnyStr, List
 
 from .helpers import secs_between, print_range
 from .config import Config
@@ -383,3 +384,17 @@ def generate_regex_for_ts(start_ts_string: AnyStr, end_ts_string: AnyStr) -> Any
         if Config.DEBUG == 1:
             print_range(str_out, start_ts_string, end_ts_string, tag=40, message="FINAL")
         return str_out
+
+
+def get_matches_from_file(
+    regex_str: AnyStr,
+    file_path: AnyStr = Config.PATH_TEST_FILE) -> List:
+    matches = []
+    try:
+        with open(file_path, "r") as f:
+            filedata = f.read()
+            matches = re.findall(regex_str, filedata)
+    except Exception as e:
+        print(f"regex_str={regex_str}")
+        print(f"e={e}")
+    return matches
