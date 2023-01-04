@@ -7,6 +7,7 @@ from datetime import datetime
 from .connect import engine, session
 from .config import ProdConfig
 from re import search
+from json import dumps, loads
 
 Base = declarative_base()
 
@@ -33,7 +34,7 @@ class ValidatorLog(Base):
                 match_obj = search("(\s[A-Z]+\s)", stripped_entry)
                 ltype = match_obj[0].strip() if match_obj else None
                 match_obj = search(r"\s([{\[].*?[}\]])$", stripped_entry)
-                j_son = match_obj[0] if match_obj else None
+                j_son = loads(match_obj[0]) if match_obj else None
                 vlog = ValidatorLog(
                     timestamp = datetime.strptime(val[0:19:], '%Y-%m-%dT%H:%M:%S'),
                     filename = filename,
@@ -48,6 +49,14 @@ class ValidatorLog(Base):
             # TODO add proper logging + throw specific exception to break when called in a loop
             print(f"[{datetime.now()}]:{e}")
 
+# Create the model if it doesn't exist already
+Base.metadata.create_all(engine)
 
+# Truncate the tables if needed
 if ProdConfig.INITIATE_MODEL == 1:
-    Base.metadata.create_all(engine)
+    try:
+        num_rows_deleted = session.query(ValidatorLog).delete()
+        print(f"{num_rows_deleted} rows deleted!")
+        session.commit()
+    except:
+        session.rollback()

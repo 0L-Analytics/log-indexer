@@ -19,7 +19,7 @@ def crawl_log_files() -> None:
 
         for filename in os.listdir(directory):
             f = os.path.join(directory, filename)
-            print(f"Crawling file {f}")
+            print(f"Crawling file {filename}")
 
             if os.path.isfile(f):
                 matches = get_matches_from_file(regex, f)

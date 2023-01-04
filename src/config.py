@@ -1,7 +1,7 @@
 
 class BaseConfig:
-    DEBUG=1
-    PATH_VALIDATOR_LOG_FILES="/home/user/projects/log-indexer/assets/logs"
+    DEBUG=0
+    PATH_VALIDATOR_LOG_FILES="/home/user/projects/log-indexer/assets/logs/stage"
 
 
 class TestConfig(BaseConfig):
