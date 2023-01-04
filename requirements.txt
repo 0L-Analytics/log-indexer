@@ -1,0 +1,4 @@
+greenlet==2.0.1
+psycopg2-binary==2.9.3
+SQLAlchemy==1.4.36
+Werkzeug==2.1.2
