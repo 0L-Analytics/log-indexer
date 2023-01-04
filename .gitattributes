@@ -1,0 +1,2 @@
+* linguist-vendored
+*.assembly linguist-vendored=false
