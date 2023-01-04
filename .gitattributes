@@ -1,2 +1,1 @@
-* linguist-vendored
-*.assembly linguist-vendored=false
+jc_ansiterm_0.1/* linguist-vendored=true
