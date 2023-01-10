@@ -7,7 +7,7 @@ from datetime import datetime
 from .connect import engine, session
 from .config import ProdConfig
 from re import search
-from json import dumps, loads
+from json import loads
 
 Base = declarative_base()
 
@@ -25,6 +25,7 @@ class ValidatorLog(Base):
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
 
+    #TODO: Debig. Almost none of the matches are stored in the DB.
     def load_list_matches(filename: AnyStr, matches_list: List) -> None:
         try:
             for val in matches_list:
@@ -33,8 +34,11 @@ class ValidatorLog(Base):
                 context = match_obj[0] if match_obj else None
                 match_obj = search("(\s[A-Z]+\s)", stripped_entry)
                 ltype = match_obj[0].strip() if match_obj else None
-                match_obj = search(r"\s([{\[].*?[}\]])$", stripped_entry)
-                j_son = loads(match_obj[0]) if match_obj else None
+                try:
+                    match_obj = search(r"\s([{\[].*?[}\]])$", stripped_entry)
+                    j_son = match_obj[0] if match_obj else None
+                except Exception as bla:
+                    j_son = None
                 vlog = ValidatorLog(
                     timestamp = datetime.strptime(val[0:19:], '%Y-%m-%dT%H:%M:%S'),
                     filename = filename,

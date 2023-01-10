@@ -29,6 +29,7 @@ def generate_regex_for_ts(start_ts_string: AnyStr, end_ts_string: AnyStr) -> Any
 
     if ds != de:
         # Script can only manage intraday ranges.
+        print("DATES WITHIN A RANGE MUST BE EQUAL!!")
         raise Exception
 
     _H = (int(start_ts_string[11::12]), int(end_ts_string[11::12]))
