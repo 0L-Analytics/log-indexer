@@ -11,8 +11,8 @@ class TestConfig(BaseConfig):
 
 class ProdConfig(BaseConfig):
     TIME_GAP_LIST=[
-        ("2022-11-20T09:00:00", "2022-11-20T10:00:00"),
-        ("2022-11-21T09:00:00", "2022-11-21T10:00:00"),
+        ("2022-11-19T23:20:00", "2022-11-19T23:59:59"),
+        ("2022-11-20T00:00:00", "2022-11-20T01:00:00"),
     ]
     INITIATE_MODEL=1
     DATABASE_URL="postgresql://research:research@localhost:5432/research"
